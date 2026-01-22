@@ -2,68 +2,78 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>K-Kevin élőben – Pulse Club</title>
+    <title>K-Kevin koncert – Pulse Club</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #0e0e0e;
-            color: #ffffff;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #111;
+            color: #eaeaea;
+            line-height: 1.6;
         }
         header {
-            background-color: #000000;
-            padding: 30px 20px;
+            background-color: #0a0a0a;
+            padding: 40px 20px;
             text-align: center;
-            border-bottom: 2px solid #e60000;
+            border-bottom: 1px solid #2a2a2a;
         }
         header h1 {
             margin: 0;
-            font-size: 42px;
-            letter-spacing: 2px;
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
         header p {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #cccccc;
+            margin-top: 8px;
+            font-size: 15px;
+            color: #9a9a9a;
         }
         .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
         }
-        .event-box {
-            border: 1px solid #333;
-            padding: 25px;
-            border-radius: 6px;
+        .event {
             background-color: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 35px;
         }
-        .event-box h2 {
+        .event h2 {
             margin-top: 0;
-            font-size: 28px;
-            color: #e60000;
+            font-size: 26px;
+            font-weight: 500;
+            margin-bottom: 25px;
         }
-        .info {
-            margin: 15px 0;
-            font-size: 18px;
+        .row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 12px 0;
+            font-size: 17px;
         }
-        .info span {
-            color: #aaaaaa;
+        .row:last-child {
+            border-bottom: none;
         }
-        .highlight {
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #e60000;
-            color: #fff;
-            font-size: 20px;
-            text-align: center;
-            border-radius: 4px;
-            font-weight: bold;
+        .label {
+            color: #b5b5b5;
+        }
+        .value {
+            font-weight: 500;
+        }
+        .notice {
+            margin-top: 30px;
+            padding: 18px;
+            background-color: #1f1f1f;
+            border-left: 4px solid #444;
+            font-size: 15px;
+            color: #cfcfcf;
         }
         footer {
+            margin: 60px 0 25px;
             text-align: center;
-            margin: 50px 0 20px;
-            font-size: 14px;
+            font-size: 13px;
             color: #777;
         }
     </style>
@@ -76,32 +86,36 @@
 </header>
 
 <div class="container">
-    <div class="event-box">
-        <h2>Exkluzív klubkoncert</h2>
+    <div class="event">
+        <h2>Koncertinformációk</h2>
 
-        <div class="info">
-            <span>Dátum:</span> 2026. február 20.
+        <div class="row">
+            <div class="label">Dátum</div>
+            <div class="value">2026. február 20.</div>
         </div>
-        <div class="info">
-            <span>Helyszín:</span> Pulse Club
+        <div class="row">
+            <div class="label">Helyszín</div>
+            <div class="value">Pulse Club</div>
         </div>
-        <div class="info">
-            <span>Belépő:</span> 100 lej
+        <div class="row">
+            <div class="label">Belépő</div>
+            <div class="value">100 lej</div>
         </div>
-        <div class="info">
-            <span>Kezdés:</span> 23:00
+        <div class="row">
+            <div class="label">Kezdés</div>
+            <div class="value">23:00</div>
         </div>
 
-        <div class="highlight">
-            K-Kevin élőben a Pulse Club színpadán
+        <div class="notice">
+            A műsorváltoztatás jogát a szervezők fenntartják.  
+            A rendezvény nem hivatalos promóciós oldal.
         </div>
     </div>
 </div>
 
 <footer>
-    © 2026 • Eseményinformáció • Nem hivatalos oldal
+    © 2026 • Pulse Club • Rendezvényinformáció
 </footer>
 
 </body>
 </html>
-
