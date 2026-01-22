@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>K-Kevin koncert – Pulse Club</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #111;
+            color: #eaeaea;
+        }
+        header {
+           width="612" height="408" alt="index html" src="https://github.com/user-attachments/assets/97f945d2-17b7-4487-a530-7b6ad7449a52"
+          background-color: #0a0a0a;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+            font-weight: 600;
+        }
+        header p {
+            margin-top: 8px;
+            font-size: 15px;
+            color: #9a9a9a;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .box {
+            background-color: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 35px;
+            margin-bottom: 50px;
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 26px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 12px 0;
+            font-size: 17px;
+        }
+        .row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            color: #b5b5b5;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 16px 28px;
+            font-size: 16px;
+            font-weight: 500;
+            background-color: #eaeaea;
+            color: #111;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .info {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #bdbdbd;
+        }
+        form {
+            margin-top: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #bdbdbd;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background-color: #0f0f0f;
+            color: #fff;
+            font-size: 15px;
+        }
+        footer {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 13px;
+            color: #777;
+        }
+    </style>
+
+    <script>
+        const MAX = 50;
+
+        function loadCount() {
+            let used = localStorage.getItem("foglalasok");
+            if (!used) {
+                localStorage.setItem("foglalasok", "0");
+                used = "0";
+            }
+            updateUI(parseInt(used));
+        }
+
+        function updateUI(used) {
+            const left = MAX - used;
+            document.getElementById("left").innerText = left;
+
+            if (left <= 0) {
+                document.getElementById("submitBtn").disabled = true;
+                document.getElementById("submitBtn").innerText = "FOGLALÁS BETELT";
+            }
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+
+            let used = parseInt(localStorage.getItem("foglalasok"));
+            if (used >= MAX) return;
+
+            used++;
+            localStorage.setItem("foglalasok", used);
+            updateUI(used);
+
+            alert(
+                "Foglalás rögzítve!\n\n" +
+                "Köszönjük az előzetes foglalást.\n" +
+                "A belépés a helyszínen történik."
+            );
+
+            e.target.reset();
+        }
+
+        window.onload = loadCount;
+    </script>
+</head>
+<body>
+
+<header>
+    <h1>K-KEVIN</h1>
+    <p>Élő koncert • Pulse Club</p>
+</header>
+
+<div class="container">
+
+    <!-- INFORMÁCIÓ -->
+    <div class="box">
+        <h2>Koncertinformációk</h2>
+
+        <div class="row">
+            <div class="label">Dátum</div>
+            <div>2026. február 20.</div>
+        </div>
+        <div class="row">
+            <div class="label">Helyszín</div>
+            <div>Pulse Club</div>
+        </div>
+        <div class="row">
+            <div class="label">Belépő</div>
+            <div>100 lej</div>
+        </div>
+        <div class="row">
+            <div class="label">Kezdés</div>
+            <div>23:00</div>
+        </div>
+
+        <a href="#foglalas" class="btn">FOGLALÁS</a>
+
+        <div class="info">
+            Előzetesen maximum <strong>50 fő</strong> foglalhat helyet.
+        </div>
+    </div>
+
+    <!-- FOGLALÁS RÉSZ -->
+    <div class="box" id="foglalas">
+        <h2>Jegyfoglalás</h2>
+
+        <div class="info">
+            Elérhető foglalások száma:  
+            <strong><span id="left">50</span> / 50</strong>
+        </div>
+
+        <form onsubmit="submitForm(event)">
+            <label>Név</label>
+            <input type="text" required>
+
+            <label>Email cím</label>
+            <input type="email" required>
+
+            <button id="submitBtn" class="btn" type="submit">
+                FOGLALÁS MEGERŐSÍTÉSE
+            </button>
+        </form>
+
+        <div class="info">
+            A foglalás tájékoztató jellegű.  
+            Ez az oldal nem hivatalos értékesítési felület.
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 • Pulse Club • Eseményinformáció<img/>
+
+</footer>
+
+</body>
+</html>
