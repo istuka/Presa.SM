@@ -32,16 +32,16 @@
             margin: 50px auto;
             padding: 0 20px;
         }
-        .event {
+        .box {
             background-color: #161616;
             border: 1px solid #2a2a2a;
             border-radius: 8px;
             padding: 35px;
+            margin-bottom: 50px;
         }
-        .event h2 {
+        h2 {
             margin-top: 0;
             font-size: 26px;
-            margin-bottom: 25px;
         }
         .row {
             display: flex;
@@ -56,96 +56,97 @@
         .label {
             color: #b5b5b5;
         }
-        .tickets {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #cfcfcf;
-        }
-        .buttons {
-            margin-top: 30px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
         .btn {
-            flex: 1;
-            padding: 15px;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 16px 28px;
             font-size: 16px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
             font-weight: 500;
-        }
-        .btn-primary {
             background-color: #eaeaea;
             color: #111;
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: #eaeaea;
-            border: 1px solid #444;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
         }
         .btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
-        .notice {
-            margin-top: 30px;
+        .info {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #bdbdbd;
+        }
+        form {
+            margin-top: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
             font-size: 14px;
-            color: #9a9a9a;
+            color: #bdbdbd;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background-color: #0f0f0f;
+            color: #fff;
+            font-size: 15px;
         }
         footer {
-            margin: 60px 0 25px;
             text-align: center;
+            margin: 40px 0 20px;
             font-size: 13px;
             color: #777;
         }
     </style>
 
     <script>
-        let maxTickets = 50;
+        const MAX = 50;
 
-        function loadTickets() {
-            let stored = localStorage.getItem("tickets_left");
-            if (stored === null) {
-                localStorage.setItem("tickets_left", maxTickets);
-                stored = maxTickets;
+        function loadCount() {
+            let used = localStorage.getItem("foglalasok");
+            if (!used) {
+                localStorage.setItem("foglalasok", "0");
+                used = "0";
             }
-            document.getElementById("ticketsLeft").innerText = stored;
+            updateUI(parseInt(used));
+        }
 
-            if (stored <= 0) {
-                document.getElementById("buyBtn").disabled = true;
-                document.getElementById("buyBtn").innerText = "🎟️ Előfoglalás betelt";
+        function updateUI(used) {
+            const left = MAX - used;
+            document.getElementById("left").innerText = left;
+
+            if (left <= 0) {
+                document.getElementById("submitBtn").disabled = true;
+                document.getElementById("submitBtn").innerText = "FOGLALÁS BETELT";
             }
         }
 
-        function buyTicket() {
-            let left = parseInt(localStorage.getItem("tickets_left"));
-            if (left > 0) {
-                left--;
-                localStorage.setItem("tickets_left", left);
-                document.getElementById("ticketsLeft").innerText = left;
+        function submitForm(e) {
+            e.preventDefault();
 
-                alert(
-                    "Sikeres előfoglalás!\n\n" +
-                    "Hátralévő előfoglalható jegyek: " + left
-                );
+            let used = parseInt(localStorage.getItem("foglalasok"));
+            if (used >= MAX) return;
 
-                if (left <= 0) {
-                    document.getElementById("buyBtn").disabled = true;
-                    document.getElementById("buyBtn").innerText = "🎟️ Előfoglalás betelt";
-                }
-            }
-        }
+            used++;
+            localStorage.setItem("foglalasok", used);
+            updateUI(used);
 
-        function registerEvent() {
             alert(
-                "Sikeres regisztráció az eseményre!\n\n" +
-                "További információk a helyszínen."
+                "Foglalás rögzítve!\n\n" +
+                "Köszönjük az előzetes foglalást.\n" +
+                "A belépés a helyszínen történik."
             );
+
+            e.target.reset();
         }
 
-        window.onload = loadTickets;
+        window.onload = loadCount;
     </script>
 </head>
 <body>
@@ -156,7 +157,9 @@
 </header>
 
 <div class="container">
-    <div class="event">
+
+    <!-- INFORMÁCIÓ -->
+    <div class="box">
         <h2>Koncertinformációk</h2>
 
         <div class="row">
@@ -176,25 +179,40 @@
             <div>23:00</div>
         </div>
 
-        <div class="tickets">
-            Előfoglalható jegyek száma:  
-            <strong><span id="ticketsLeft">50</span> / 50</strong>
-        </div>
+        <a href="#foglalas" class="btn">FOGLALÁS</a>
 
-        <div class="buttons">
-            <button id="buyBtn" class="btn btn-primary" onclick="buyTicket()">
-                🎟️ Jegy előfoglalása
-            </button>
-            <button class="btn btn-secondary" onclick="registerEvent()">
-                📝 Regisztráció az eseményre
-            </button>
-        </div>
-
-        <div class="notice">
-            Maximum 50 jegy foglalható előre.  
-            A rendezvény nem hivatalos promóciós oldal.
+        <div class="info">
+            Előzetesen maximum <strong>50 fő</strong> foglalhat helyet.
         </div>
     </div>
+
+    <!-- FOGLALÁS RÉSZ -->
+    <div class="box" id="foglalas">
+        <h2>Jegyfoglalás</h2>
+
+        <div class="info">
+            Elérhető foglalások száma:  
+            <strong><span id="left">50</span> / 50</strong>
+        </div>
+
+        <form onsubmit="submitForm(event)">
+            <label>Név</label>
+            <input type="text" required>
+
+            <label>Email cím</label>
+            <input type="email" required>
+
+            <button id="submitBtn" class="btn" type="submit">
+                FOGLALÁS MEGERŐSÍTÉSE
+            </button>
+        </form>
+
+        <div class="info">
+            A foglalás tájékoztató jellegű.  
+            Ez az oldal nem hivatalos értékesítési felület.
+        </div>
+    </div>
+
 </div>
 
 <footer>
@@ -203,3 +221,4 @@
 
 </body>
 </html>
+
